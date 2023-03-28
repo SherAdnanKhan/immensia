@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  mysql-db:
+    image: mysql
+    volumes:
+      - ./db_data:/var/lib/mysql:rw,delegated
+
+    container_name: mysql-db
+
+    env_file:
+      - ./env/db.env
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+
+  backend-node :
+    build: ./backend-node 
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./backend-node:/app
+      - notused:/app/node_modules
+    container_name: backend 
+    depends_on:
+      -  mysql-db
+  frontend-react:
+    build: ./frontend-react
+    ports:
+    - '3000:3000'
+    volumes:
+      - ./frontend-react/src:/app/src
+      - notusede:/app/node_modules
+    container_name: frontend
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend-node 
+volumes:
+  db_data:
+  notused:
+  notusede:
