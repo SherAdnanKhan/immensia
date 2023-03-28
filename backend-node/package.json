@@ -7,7 +7,6 @@
     "start": "node server",
     "serv": "nodemon server",
     "client": "npm start --prefix ../frontend-react",
-    "build": "npm run client && rm -rf build && cp -r ../frontend-react/build ./ && npm install --only=production",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "ibex",
